@@ -43,6 +43,7 @@ def cadastro(request):
     
 def login_view(request):
     if request.method == 'GET':
+        print(request.user)
         return render(request, 'login.html')    
     elif request.method == 'POST':
         username = request.POST.get('username')
@@ -53,6 +54,11 @@ def login_view(request):
         if user:
             auth.login(request, user)
             return redirect('/pacientes/home') #por enquanto vai dar erro
+        
         messages.add_message(request, constants.ERROR, 'Usuário ou senha inválidos.')
         return redirect('/usuarios/login')
     
+       
+def sair(request):
+        auth.logout(request)
+        return redirect('/usuarios/login')
